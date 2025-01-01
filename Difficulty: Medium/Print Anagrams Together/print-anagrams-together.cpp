@@ -14,22 +14,22 @@ class Solution {
         // code here
         int n = arr.size();
         
-        vector<vector<string>> ans;
-        unordered_map<string , int> mpp;
+        vector<vector<string>> res;
+        
+        unordered_map<string , vector<string>> mpp;
         
         for(int i=0; i<n; i++){
             string s = arr[i];
             
             sort(s.begin() , s.end());
             
-            if(mpp.find(s) == mpp.end()){
-                mpp[s] = ans.size();
-                ans.push_back({});
-            }
-            
-            ans[mpp[s]].push_back(arr[i]);
+            mpp[s].push_back(arr[i]);
         }
-        return ans;
+        
+        for(auto it : mpp){
+            res.push_back(it.second);
+        }
+        return res;
     }
 };
 

@@ -9,21 +9,22 @@ class Solution {
   public:
     bool isBalanced(string& s) {
         int n = s.size();
-        stack<char> ss;
-        for (int i = 0; i < n; i++) {
-            char ch = s[i];
-            if (ch == '(' || ch == '{' || ch == '[') {
-                ss.push(s[i]);
-                continue;
-            } 
-            else if (ss.empty() || (ch == ')' && ss.top() != '(') || (ch == ']' && ss.top() != '[') || (ch == '}' && ss.top() != '{')) {
-                return false;
-            } 
-            else {
-                ss.pop();
+        
+        stack<char> st;
+        for(int i=0; i<n; i++){
+            if(s[i] == '(' || s[i] == '[' || s[i] == '{'){
+                st.push(s[i]);
             }
+            else {
+                if(st.empty() || s[i] == ')' && st.top() != '(' || s[i] == ']' && st.top() != '[' || s[i] == '}' && st.top() != '{'){
+                    return false;
+                }
+                else {
+                    st.pop();
+                }
+            }        
         }
-        return ss.empty();
+        return st.empty();
     }
 };
 

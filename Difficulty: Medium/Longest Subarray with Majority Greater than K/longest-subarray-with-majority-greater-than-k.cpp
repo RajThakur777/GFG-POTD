@@ -1,65 +1,41 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-
-// User function Template for C++
 class Solution {
   public:
     int longestSubarray(vector<int> &arr, int k) {
         // Code here
-         int sum=0;
+        int n = arr.size();
         
-        int maxi=0;
-        int n=arr.size();
-        unordered_map<int,int>mp;
-        for(int i=0;i<n;i++){
-              
-              if (arr[i]>k) sum+=1; 
-              else  sum-=1;
-              
-              if (sum>0  )  maxi=max(maxi,i+1);
-               
-              if (mp.find(sum-1)!=mp.end() ){
-                     maxi=max(maxi,i-mp[sum-1]);
-              }
-              if (mp.find(sum)==mp.end() ){
-                     mp[sum]=i;
-              }
-              
-              
+        vector<int> res(n);
+        
+        for(int i=0; i<n; i++) {
+            if(arr[i] > k) {
+                res[i] = 1;
+            }
+            else {
+                res[i] = -1;
+            }
         }
         
-        return maxi;
+        int sum = 0;
+        int len = 0;
+        
+        unordered_map<int , int> mpp;
+        
+        for(int i=0; i<n; i++) {
+            sum += res[i];
+            
+            if(sum > 0) {
+                len = max(len , i+1);
+            }
+            else {
+                   if(mpp.find(sum - 1) != mpp.end()) {
+                len = max(len , i - mpp[sum - 1]);
+            }
+            }
+            
+            if(mpp.find(sum) == mpp.end()) {
+                mpp[sum] = i;
+            }
+        }
+        return len;
     }
 };
-
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        vector<int> arr;
-        string input;
-        getline(cin, input);
-        stringstream ss(input);
-        int number;
-        while (ss >> number) {
-            arr.push_back(number);
-        }
-        getline(cin, input);
-        int k = stoi(input);
-
-        Solution ob;
-        cout << ob.longestSubarray(arr, k) << endl;
-        cout << "~" << endl;
-    }
-    return 0;
-}
-
-// } Driver Code Ends

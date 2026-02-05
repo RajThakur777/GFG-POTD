@@ -4,19 +4,15 @@ class Solution {
         // code here
         int n = arr.size();
         
-        int ans = INT_MIN;
+        int ans = 0;
         
         int i = 0;
-        int zero = 0;
+        int cnt = 0;
         for(int j=0; j<n; j++) {
-            if(arr[j] == 0) {
-                zero++;
-            }
+            cnt += (arr[j] == 0);
             
-            while(zero > k) {
-                if(arr[i] == 0) {
-                    zero--;
-                }
+            while(cnt > k) {
+                cnt -= (arr[i] == 0);
                 i++;
             }
             ans = max(ans , (j - i + 1));

@@ -1,17 +1,40 @@
 class Solution {
   public:
-    int kokoEat(vector<int>& a, int k) {
-        int n=a.size();
-        int l=1;
-        int r=INT_MIN;
-        for(int i=0;i<n;i++)r=max(r,a[i]);
-        while(l<r){
-            int m=(l+r)/2;
-            int c=0;
-            for(int i=0;i<n;i++)c=c+ (a[i]/m) + (a[i]%m !=0 );
-            if(c<=k)r=m;
-            else l=m+1;
+  
+    bool check(int mid , vector<int> &arr , int k) {
+        int cnt = 0;
+        
+        for(int i=0; i<arr.size(); i++) {
+            if(arr[i] <= mid) {
+                cnt++;
+            }
+            else {
+                cnt += ((arr[i] + mid - 1) / mid);
+            }
         }
-        return l;
+        return (cnt <= k);
+    }
+  
+    int kokoEat(vector<int>& arr, int k) {
+        // Code here
+        int n = arr.size();
+        
+        int ans = 0;
+        
+        int low = 1;
+        int high = *max_element(arr.begin() , arr.end());
+        
+        while(low <= high) {
+            int mid = (low + high) / 2;
+            
+            if(check(mid , arr , k)) {
+                ans = mid;
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1;
+            }
+        }
+        return ans;
     }
 };
